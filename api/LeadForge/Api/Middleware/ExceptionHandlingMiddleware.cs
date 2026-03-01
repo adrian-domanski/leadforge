@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using LeadForge.Domain.Exceptions;
 
 namespace LeadForge.Api.Middleware;
 
@@ -36,6 +37,8 @@ public class ExceptionHandlingMiddleware
     {
         var statusCode = exception switch
         {
+            NotFoundException => HttpStatusCode.NotFound,
+            InsufficientCreditsException => HttpStatusCode.BadRequest,
             ArgumentException => HttpStatusCode.BadRequest,
             UnauthorizedAccessException => HttpStatusCode.Unauthorized,
             _ => HttpStatusCode.InternalServerError

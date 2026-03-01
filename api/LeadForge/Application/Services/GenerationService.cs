@@ -1,5 +1,6 @@
 using LeadForge.Application.Interfaces;
 using LeadForge.Domain;
+using LeadForge.Domain.Exceptions;
 using LeadForge.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,10 +23,10 @@ public class GenerationService : IGenerationService
         var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
         if (user == null)
-            throw new Exception("User not found");
+            throw new NotFoundException("User");
 
         if (user.Credits <= 0)
-            throw new Exception("No credits remaining.");
+            throw new InsufficientCreditsException();
 
         var output = await _openAiService.GenerateLinkedInPost(inputText, goalType);
 
