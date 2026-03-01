@@ -1,9 +1,13 @@
 using System.Text;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using LeadForge.Api.Middleware;
 using LeadForge.Application;
 using LeadForge.Application.Interfaces;
+using LeadForge.Application.Validators;
 using LeadForge.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -49,6 +53,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<GeneratePostRequestValidator>();
 // Services
 builder.Services.AddScoped<IOpenAiService, OpenAiService>();
 builder.Services.AddScoped<IGenerationService, GenerationService>();
