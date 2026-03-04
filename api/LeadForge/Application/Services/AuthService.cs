@@ -1,6 +1,7 @@
 using System.Security.Authentication;
 using LeadForge.Application.Interfaces;
 using LeadForge.Domain;
+using LeadForge.Domain.Exceptions;
 using LeadForge.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,7 +45,7 @@ public class AuthService : IAuthService
 
         if (existingToken == null || existingToken.IsRevoked ||
             existingToken.ExpiresAt < DateTime.UtcNow)
-            throw new UnauthorizedAccessException("Invalid refresh token");
+            throw new InvalidRefreshTokenException();
 
         // Token rotation
         existingToken.IsRevoked = true;
@@ -66,7 +67,7 @@ public class AuthService : IAuthService
             .AnyAsync(x => x.Email == request.Email);
 
         if (existingUser)
-            throw new AuthenticationException("User already exists");
+            throw new AlreadyExistsException("User already exists.");
 
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 

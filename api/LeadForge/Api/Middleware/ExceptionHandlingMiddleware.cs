@@ -39,8 +39,10 @@ public class ExceptionHandlingMiddleware
         {
             NotFoundException => HttpStatusCode.NotFound,
             InsufficientCreditsException => HttpStatusCode.BadRequest,
-            ArgumentException => HttpStatusCode.BadRequest,
-            UnauthorizedAccessException => HttpStatusCode.Unauthorized,
+            InvalidCredentialsException => HttpStatusCode.Unauthorized,
+            AlreadyExistsException => HttpStatusCode.Conflict,
+            InvalidRefreshTokenException => HttpStatusCode.Unauthorized,
+
             _ => HttpStatusCode.InternalServerError
         };
 
