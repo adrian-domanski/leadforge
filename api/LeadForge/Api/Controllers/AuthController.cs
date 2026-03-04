@@ -1,11 +1,9 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using LeadForge.Domain;
-using LeadForge.Infrastructure;
+
+using LeadForge.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+using LoginRequest = LeadForge.Application.LoginRequest;
+using RegisterRequest = LeadForge.Application.RegisterRequest;
+using RefreshRequest = LeadForge.Application.RefreshRequest;
 
 namespace LeadForge.Api.Controllers;
 
@@ -13,73 +11,34 @@ namespace LeadForge.Api.Controllers;
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly AppDbContext _db;
-    private readonly IConfiguration _config;
+    private readonly IAuthService _authService;
 
-    public AuthController(AppDbContext db, IConfiguration config)
+    public AuthController(IAuthService authService)
     {
-       _db = db;
-       _config = config;
+        _authService = authService;
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(string email, string password)
+    public async Task<IActionResult> Register(RegisterRequest request)
     {
-        if (await _db.Users.AnyAsync(u => u.Email == email))
-            return BadRequest("Email already exists.");
+        var result = await _authService.RegisterAsync(request);
+        return Ok(result);
 
-        var user = new User
-        {
-            Id = Guid.NewGuid(),
-            Email = email,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
-            Credits = 5
-        };
-
-        _db.Users.Add(user);
-        await _db.SaveChangesAsync();
-
-        return Ok("User registered.");
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(string email, string password)
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
-        var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
-
-        if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
-            return Unauthorized("Invalid credentials.");
-
-        var token = GenerateJwtToken(user);
-
-        return Ok(new { token });
+        var result = await _authService.LoginAsync(request);
+        return Ok(result);
     }
 
-    private string GenerateJwtToken(User user)
+    [HttpPost("/refresh")]
+    public async Task<IActionResult> Refresh([FromBody] RefreshRequest request)
     {
-        var jwtSettings = _config.GetSection("Jwt");
-        var key = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(jwtSettings["Key"]!)
-        );
-
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var claims = new[]
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email)
-        };
-
-        var token = new JwtSecurityToken(
-            issuer: jwtSettings["Issuer"],
-            audience: jwtSettings["Audience"],
-            claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(
-                int.Parse(jwtSettings["ExpiresInMinutes"]!)
-            ),
-            signingCredentials: creds
-        );
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        var result = await _authService.RefreshAsync(request);
+        return Ok(result);
     }
+
+
 }

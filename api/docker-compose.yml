@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: leadforge_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: leadforge
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - leadforge_data:/var/lib/postgresql/data
+
+volumes:
+  leadforge_data:

@@ -58,6 +58,8 @@ builder.Services.AddValidatorsFromAssemblyContaining<GeneratePostRequestValidato
 // Services
 builder.Services.AddScoped<IOpenAiService, OpenAiService>();
 builder.Services.AddScoped<IGenerationService, GenerationService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // --------------------
 // Database
