@@ -1,6 +1,8 @@
+using LeadForge.Domain.Enums;
+
 namespace LeadForge.Application.Interfaces;
 
 public interface IOpenAiService
 {
-   Task<string> GenerateLinkedInPost(string input, string goal);
+   Task<string> GenerateLinkedInPost(string input, GoalType goal);
 }

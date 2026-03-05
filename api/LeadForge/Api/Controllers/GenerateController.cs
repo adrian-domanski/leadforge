@@ -21,14 +21,19 @@ public class GenerateController : ControllerBase
    [HttpPost]
    public async Task<IActionResult> Generate(GeneratePostRequest request)
    {
-      var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+      var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-      if (userIdClaim == null)
-         return Unauthorized();
+      var result = await _generationService.GenerateAsync(userId, request);
 
-      var userId = Guid.Parse(userIdClaim);
-      var result = await _generationService.GenerateAsync(
-      userId, request.InputText, request.GoalType);
+      return Ok(result);
+   }
+
+   [HttpGet]
+   public async Task<IActionResult> GetUserGenerations(GeneratePostRequest request)
+   {
+      var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+      var result = await _generationService.GenerateAsync(userId, request);
 
       return Ok(result);
    }

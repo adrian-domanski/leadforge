@@ -2,6 +2,9 @@ namespace LeadForge.Application;
 
 public class GeneratePostResponse
 {
-   public string Output { get; set; } = null!;
-   public int RemainingCredits { get; set; }
+
+   public Guid Id { get; set; }
+   public string InputText { get; set; } = string.Empty;
+   public string OutputText { get; set; } = string.Empty;
+   public DateTime CreatedAt { get; set; }
 }

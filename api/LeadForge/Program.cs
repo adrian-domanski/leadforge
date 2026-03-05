@@ -7,16 +7,22 @@ using LeadForge.Application.Interfaces;
 using LeadForge.Application.Validators;
 using LeadForge.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+// --------------------
+// Core
+// --------------------
 
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+// --------------------
+// Swagger
+// --------------------
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -52,14 +58,23 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// --------------------
+// Validation
+// --------------------
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<GeneratePostRequestValidator>();
-// Services
+
+// --------------------
+// Application services
+// --------------------
+
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IOpenAiService, OpenAiService>();
 builder.Services.AddScoped<IGenerationService, GenerationService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 // --------------------
 // Database
@@ -71,7 +86,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     ));
 
 // --------------------
-// JWT Authentication
+// Authentication
 // --------------------
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -102,13 +117,15 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-app.UseAuthentication();
-
 // --------------------
 // Middleware Pipeline
 // --------------------
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+// --------------------
+// Development Tools
+// --------------------
 
 if (app.Environment.IsDevelopment())
 {
@@ -119,11 +136,14 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+// --------------------
+// Pipeline
+// --------------------
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

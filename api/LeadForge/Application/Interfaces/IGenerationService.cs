@@ -2,7 +2,5 @@ namespace LeadForge.Application.Interfaces;
 
 public interface IGenerationService
 {
-    Task<GeneratePostResponse> GenerateAsync(
-        Guid userId, string inputText, string goalType);
-
+    Task<GeneratePostResponse> GenerateAsync(Guid userId, GeneratePostRequest request);
 }
