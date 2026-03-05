@@ -10,15 +10,18 @@ public class GenerationService : IGenerationService
 {
     private readonly AppDbContext _db;
     private readonly IOpenAiService _openAiService;
+    private readonly ICurrentUserService _currentUserService;
 
-    public GenerationService(AppDbContext db, IOpenAiService openAiService)
+    public GenerationService(AppDbContext db, IOpenAiService openAiService, ICurrentUserService currentUserService)
     {
         _db = db;
         _openAiService = openAiService;
+        _currentUserService = currentUserService;
     }
 
-    public async Task<GeneratePostResponse> GenerateAsync(Guid userId, GeneratePostRequest request)
+    public async Task<GeneratePostResponse> GenerateAsync( GeneratePostRequest request)
     {
+        var userId = _currentUserService.GetUserId();
 
         var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
@@ -28,7 +31,11 @@ public class GenerationService : IGenerationService
         if (user.Credits <= 0)
             throw new InsufficientCreditsException();
 
-        var output = await _openAiService.GenerateLinkedInPost(request.InputText, request.GoalType);
+        var output = await _openAiService.GenerateLinkedInPost(new GenerateLinkedInPostRequest
+        {
+          GoalType  = request.GoalType,
+          InputText = request.InputText
+        });
 
         user.Credits -= 1;
 
@@ -51,7 +58,5 @@ public class GenerationService : IGenerationService
             OutputText = output,
         };
     }
-
-    public async Task<Pa>
 
 }

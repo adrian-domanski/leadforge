@@ -33,10 +33,17 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("/refresh")]
+    [HttpPost("refresh")]
     public async Task<IActionResult> Refresh([FromBody] RefreshRequest request)
     {
         var result = await _authService.RefreshAsync(request);
+        return Ok(result);
+    }
+
+    [HttpGet("me")]
+    public async Task<IActionResult> GetMe()
+    {
+        var result = await _authService.GetCurrentUserAsync();
         return Ok(result);
     }
 

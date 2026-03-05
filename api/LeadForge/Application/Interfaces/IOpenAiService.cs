@@ -4,5 +4,5 @@ namespace LeadForge.Application.Interfaces;
 
 public interface IOpenAiService
 {
-   Task<string> GenerateLinkedInPost(string input, GoalType goal);
+   Task<string> GenerateLinkedInPost(GenerateLinkedInPostRequest request);
 }

@@ -8,4 +8,5 @@ public interface IAuthService
    Task<AuthResponse> LoginAsync(LoginRequest request);
    Task<AuthResponse> RefreshAsync(RefreshRequest request);
    Task<AuthResponse> RegisterAsync(RegisterRequest request);
+   Task<MeResponse> GetCurrentUserAsync();
 }

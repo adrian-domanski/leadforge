@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using LeadForge.Application;
 using LeadForge.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -21,9 +20,8 @@ public class GenerateController : ControllerBase
    [HttpPost]
    public async Task<IActionResult> Generate(GeneratePostRequest request)
    {
-      var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-      var result = await _generationService.GenerateAsync(userId, request);
+      var result = await _generationService.GenerateAsync(request);
 
       return Ok(result);
    }
@@ -31,9 +29,8 @@ public class GenerateController : ControllerBase
    [HttpGet]
    public async Task<IActionResult> GetUserGenerations(GeneratePostRequest request)
    {
-      var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-      var result = await _generationService.GenerateAsync(userId, request);
+      var result = await _generationService.GenerateAsync(request);
 
       return Ok(result);
    }

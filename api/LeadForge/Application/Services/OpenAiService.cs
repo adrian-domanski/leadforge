@@ -1,4 +1,5 @@
 using LeadForge.Application.Interfaces;
+using LeadForge.Domain.Enums;
 using OpenAI;
 using OpenAI.Chat;
 
@@ -14,12 +15,12 @@ public class OpenAiService : IOpenAiService
                 ?? throw new Exception("OpenAI API key not configured.");
    }
 
-   public async Task<string> GenerateLinkedInPost(string input, string goal)
+   public async Task<string> GenerateLinkedInPost(GenerateLinkedInPostRequest request)
    {
       var client = new OpenAIClient(_apiKey);
       var chatClient = client.GetChatClient("gpt-4o-mini");
 
-      var prompt = BuildPrompt(input, goal);
+      var prompt = BuildPrompt(request.InputText, request.GoalType);
 
       var response = await chatClient.CompleteChatAsync(
          new ChatMessage[]
@@ -34,7 +35,7 @@ public class OpenAiService : IOpenAiService
       return response.Value.Content[0].Text;
    }
 
-   private string BuildPrompt(string input, string goal)
+   private string BuildPrompt(string inputText, GoalType goal)
    {
       return $"""
               Write a LinkedIn post designed to generate inbound leads.
@@ -50,7 +51,9 @@ public class OpenAiService : IOpenAiService
               - Soft CTA at the end
 
               Idea:
-              {input}
+              {inputText}
               """;
    }
+
+
 }

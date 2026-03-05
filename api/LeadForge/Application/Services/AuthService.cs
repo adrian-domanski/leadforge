@@ -93,6 +93,11 @@ public class AuthService : IAuthService
         };
     }
 
+    public async Task<MeResponse> GetCurrentUserAsync()
+    {
+
+    }
+
     private async Task<string> CreateRefreshToken(Guid userId)
     {
         var refreshTokenPlain = _tokenService.GenerateRefreshToken();
