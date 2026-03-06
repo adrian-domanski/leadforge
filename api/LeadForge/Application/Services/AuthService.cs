@@ -11,11 +11,13 @@ public class AuthService : IAuthService
 {
     private readonly ITokenService _tokenService;
     private readonly AppDbContext _db;
+    private readonly ICurrentUserService _currentUserService;
 
-    public AuthService(ITokenService tokenService, AppDbContext db)
+    public AuthService(ITokenService tokenService, AppDbContext db, ICurrentUserService currentUserService)
     {
         _tokenService = tokenService;
         _db = db;
+        _currentUserService = currentUserService;
     }
 
     public async Task<AuthResponse> LoginAsync(LoginRequest request)
@@ -95,7 +97,19 @@ public class AuthService : IAuthService
 
     public async Task<MeResponse> GetCurrentUserAsync()
     {
+        var userId = _currentUserService.GetUserId();
 
+        var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+        if (user is null)
+            throw new NotFoundException("Invalid token, user does not exist.");
+
+        return new MeResponse
+        {
+            Id = user.Id,
+            Credits = user.Credits,
+            Email = user.Email
+        };
     }
 
     private async Task<string> CreateRefreshToken(Guid userId)

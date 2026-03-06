@@ -31,9 +31,8 @@ namespace LeadForge.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("GoalType")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("GoalType")
+                        .HasColumnType("integer");
 
                     b.Property<string>("InputText")
                         .IsRequired()
@@ -58,6 +57,9 @@ namespace LeadForge.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("ExpiresAt")
                         .HasColumnType("timestamp with time zone");

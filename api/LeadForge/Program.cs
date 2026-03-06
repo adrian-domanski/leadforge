@@ -3,8 +3,13 @@ using FluentValidation.AspNetCore;
 using LeadForge.Api.Middleware;
 using LeadForge.Application.Extensions;
 using LeadForge.Application.Validators;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddLoggerConfiguration();
+
+Log.Information("Starting LeadForge API...");
 
 // --------------------
 // Core
@@ -62,12 +67,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "LeadForge API v1");
+        c.ConfigObject.AdditionalItems["persistAuthorization"] = "true";
     });
 }
 
 // --------------------
 // Pipeline
 // --------------------
+
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 

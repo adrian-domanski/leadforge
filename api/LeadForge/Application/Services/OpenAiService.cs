@@ -15,7 +15,8 @@ public class OpenAiService : IOpenAiService
                 ?? throw new Exception("OpenAI API key not configured.");
    }
 
-   public async Task<string> GenerateLinkedInPost(GenerateLinkedInPostRequest request)
+   public async Task<string> GenerateLinkedInPost(GenerateLinkedInPostRequest request,
+      CancellationToken ct)
    {
       var client = new OpenAIClient(_apiKey);
       var chatClient = client.GetChatClient("gpt-4o-mini");

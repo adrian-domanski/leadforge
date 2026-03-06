@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LeadForge.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260302083051_AddRefreshTokens2")]
-    partial class AddRefreshTokens2
+    [Migration("20260306114424_Migration1")]
+    partial class Migration1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,9 +34,8 @@ namespace LeadForge.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("GoalType")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("GoalType")
+                        .HasColumnType("integer");
 
                     b.Property<string>("InputText")
                         .IsRequired()
@@ -62,13 +61,16 @@ namespace LeadForge.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<DateTime>("ExpiresAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsRevoked")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Token")
+                    b.Property<string>("TokenHash")
                         .IsRequired()
                         .HasColumnType("text");
 
