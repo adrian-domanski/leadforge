@@ -79,6 +79,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseSerilogRequestLogging();
 app.UseRateLimiter();
+app.UseCors("frontend");
 // ---
 
 app.UseHttpsRedirection();

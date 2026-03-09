@@ -8,7 +8,7 @@ namespace LeadForge.Api.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("api/generate/[controller]")]
+[Route("api/generation")]
 public class GenerationController : ControllerBase
 {
    private readonly IGenerationService _generationService;
