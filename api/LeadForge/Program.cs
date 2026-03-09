@@ -37,6 +37,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<GeneratePostRequestValidato
 
 builder.Services.AddApplicationServices();
 builder.Services.AddRateLimiterServices();
+builder.Services.AddCorsPolicyServices();
 
 // --------------------
 // Database
