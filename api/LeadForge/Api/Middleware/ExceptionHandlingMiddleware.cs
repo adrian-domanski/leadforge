@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text.Json;
 using LeadForge.Domain.Exceptions;
+using LeadForge.Domain.Exceptions.OpenAi;
 
 namespace LeadForge.Api.Middleware;
 
@@ -46,6 +47,9 @@ public class ExceptionHandlingMiddleware
             InvalidCredentialsException => HttpStatusCode.Unauthorized,
             AlreadyExistsException => HttpStatusCode.Conflict,
             InvalidRefreshTokenException => HttpStatusCode.Unauthorized,
+
+            // OpenAI
+            OpenAiQuotaExceededException => HttpStatusCode.TooManyRequests,
 
             _ => HttpStatusCode.InternalServerError
         };

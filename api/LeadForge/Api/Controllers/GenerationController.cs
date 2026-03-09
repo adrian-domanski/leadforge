@@ -2,6 +2,7 @@ using LeadForge.Application;
 using LeadForge.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace LeadForge.Api.Controllers;
 
@@ -17,6 +18,7 @@ public class GenerationController : ControllerBase
       _generationService = generationService;
    }
 
+   [EnableRateLimiting("generation")]
    [HttpPost]
    public async Task<ActionResult> CreateGeneration(
       GeneratePostRequest request,
@@ -52,5 +54,13 @@ public class GenerationController : ControllerBase
          ct);
 
       return Ok(result);
+   }
+
+   [HttpDelete("{id:guid}")]
+   public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
+   {
+      await _generationService.DeleteAsync(id, ct);
+
+      return NoContent();
    }
 }

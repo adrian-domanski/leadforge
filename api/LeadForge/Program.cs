@@ -36,6 +36,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<GeneratePostRequestValidato
 // --------------------
 
 builder.Services.AddApplicationServices();
+builder.Services.AddRateLimiterServices();
 
 // --------------------
 // Database
@@ -76,6 +77,8 @@ if (app.Environment.IsDevelopment())
 // --------------------
 
 app.UseSerilogRequestLogging();
+app.UseRateLimiter();
+// ---
 
 app.UseHttpsRedirection();
 

@@ -11,4 +11,6 @@ public interface IGenerationService
     Task<GenerationListItem> GetByIdAsync(
         Guid id,
         CancellationToken ct);
+
+    Task DeleteAsync(Guid id, CancellationToken ct);
 }

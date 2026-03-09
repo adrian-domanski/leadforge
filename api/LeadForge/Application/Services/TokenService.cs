@@ -35,11 +35,14 @@ public class TokenService : ITokenService
             new Claim(ClaimTypes.Email, user.Email)
         };
 
+        var expiresInMinutes = int.Parse(jwtSettings["ExpiresInMinutes"]!);
+
+
         var token = new JwtSecurityToken(
             issuer: jwtSettings["Issuer"],
             audience: jwtSettings["Audience"],
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(15),
+            expires: DateTime.UtcNow.AddMinutes(expiresInMinutes),
             signingCredentials: credentials
         );
 

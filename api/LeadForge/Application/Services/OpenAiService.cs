@@ -1,5 +1,6 @@
 using LeadForge.Application.Interfaces;
 using LeadForge.Domain.Enums;
+using LeadForge.Domain.Exceptions.OpenAi;
 using OpenAI;
 using OpenAI.Chat;
 
@@ -7,51 +8,89 @@ namespace LeadForge.Application;
 
 public class OpenAiService : IOpenAiService
 {
-   private readonly string _apiKey;
+   private readonly ChatClient _chatClient;
 
    public OpenAiService(IConfiguration configuration)
    {
-      _apiKey = configuration["OpenAI:ApiKey"]
+      var apiKey = configuration["OpenAI:ApiKey"]
                 ?? throw new Exception("OpenAI API key not configured.");
+
+      var client = new OpenAIClient(apiKey);
+
+      _chatClient = client.GetChatClient("gpt-4o-mini");
    }
 
-   public async Task<string> GenerateLinkedInPost(GenerateLinkedInPostRequest request,
+   public async Task<string> GenerateLinkedInPost(
+      GenerateLinkedInPostRequest request,
       CancellationToken ct)
    {
-      var client = new OpenAIClient(_apiKey);
-      var chatClient = client.GetChatClient("gpt-4o-mini");
+      try
+      {
+         var prompt = BuildPrompt(request.InputText, request.GoalType);
 
-      var prompt = BuildPrompt(request.InputText, request.GoalType);
+         var response = await _chatClient.CompleteChatAsync(
+            new ChatMessage[]
+            {
+               ChatMessage.CreateSystemMessage(
+                  "You are a LinkedIn content strategist helping software agency founders generate inbound leads."
+               ),
+               ChatMessage.CreateUserMessage(prompt)
+            },
+            cancellationToken: ct
+         );
 
-      var response = await chatClient.CompleteChatAsync(
-         new ChatMessage[]
-         {
-            ChatMessage.CreateSystemMessage(
-               "You are a LinkedIn content strategist for software agency founders."
-            ),
-            ChatMessage.CreateUserMessage(prompt)
-         }
-      );
+         var content = response.Value.Content.FirstOrDefault()?.Text;
 
-      return response.Value.Content[0].Text;
+         if (string.IsNullOrWhiteSpace(content))
+            throw new Exception("OpenAI returned empty response.");
+
+         return content;
+      }
+      catch (Exception ex)
+      {
+         if (ex.Message.Contains("insufficient_quota"))
+            throw new OpenAiQuotaExceededException();
+
+         throw;
+      }
    }
 
    private string BuildPrompt(string inputText, GoalType goal)
    {
-      return $"""
-              Write a LinkedIn post designed to generate inbound leads.
+      var goalInstruction = goal switch
+      {
+         GoalType.LeadGeneration =>
+            "Focus on attracting potential clients and encouraging them to reach out.",
 
-              Goal: {goal}
+         GoalType.Authority =>
+            "Position the author as an expert and share valuable insights from experience.",
+
+         GoalType.Storytelling =>
+            "Tell a short personal or business story with a lesson relevant to founders.",
+
+         GoalType.Engagement =>
+            "Encourage discussion and comments by asking thoughtful questions.",
+
+         _ =>
+            "Write a high-quality LinkedIn post."
+      };
+
+      return $"""
+              Write a LinkedIn post.
+
+              Objective:
+              {goalInstruction}
 
               Rules:
-              - Strong hook (first line)
+              - Strong hook in the first line
               - Short paragraphs
               - No fluff
-              - Highlight business outcome
+              - Highlight business outcomes
               - Professional tone
-              - Soft CTA at the end
+              - Maximum 200 words
+              - End with a soft call-to-action
 
-              Idea:
+              Idea for the post:
               {inputText}
               """;
    }

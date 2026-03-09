@@ -69,7 +69,10 @@ public class GenerationService : IGenerationService
 
         return new GeneratePostResponse
         {
+            Id = generation.Id,
             OutputText = output,
+            CreatedAt = generation.CreatedAt,
+            InputText = generation.InputText
         };
     }
 
@@ -129,5 +132,20 @@ public class GenerationService : IGenerationService
             throw new NotFoundException("Generation");
 
         return generation;
+    }
+
+    public async Task DeleteAsync(Guid id, CancellationToken ct)
+    {
+        var userId = _currentUserService.GetUserId();
+
+        var generation = await _db.Generations
+            .FirstOrDefaultAsync(g => g.Id == id && g.UserId == userId, ct);
+
+        if (generation == null)
+            throw new NotFoundException("Generation");
+
+        _db.Generations.Remove(generation);
+
+        await _db.SaveChangesAsync(ct);
     }
 }

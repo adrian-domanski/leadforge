@@ -1,0 +1,237 @@
+2026-03-09 10:40:24.479 +01:00 [INF] Starting LeadForge API...
+2026-03-09 10:40:24.664 +01:00 [INF] User profile is available. Using '/Users/adriandomanski/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-03-09 10:40:24.713 +01:00 [INF] Now listening on: http://localhost:5187
+2026-03-09 10:40:24.715 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-09 10:40:24.715 +01:00 [INF] Hosting environment: Development
+2026-03-09 10:40:24.715 +01:00 [INF] Content root path: /Users/adriandomanski/Projects/leadforge/api/LeadForge
+2026-03-09 10:40:24.923 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5187/swagger/index.html - null null
+2026-03-09 10:40:25.049 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5187/swagger/index.html - 200 null text/html;charset=utf-8 127.4642ms
+2026-03-09 10:40:25.177 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5187/swagger/v1/swagger.json - null null
+2026-03-09 10:40:25.274 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5187/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 97.8509ms
+2026-03-09 10:41:08.848 +01:00 [INF] Request starting HTTP/1.1 POST http://localhost:5187/api/Auth/login - application/json 64
+2026-03-09 10:41:08.855 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-03-09 10:41:08.908 +01:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '3/7/2026 12:54:11 PM', Current time (UTC): '3/9/2026 9:41:08 AM'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-03-09 10:41:08.918 +01:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '3/7/2026 12:54:11 PM', Current time (UTC): '3/9/2026 9:41:08 AM'.
+2026-03-09 10:41:08.920 +01:00 [INF] Executing endpoint 'LeadForge.Api.Controllers.AuthController.Login (LeadForge)'
+2026-03-09 10:41:08.935 +01:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(LeadForge.Application.LoginRequest) on controller LeadForge.Api.Controllers.AuthController (LeadForge).
+2026-03-09 10:41:09.060 +01:00 [INF] Executing action method LeadForge.Api.Controllers.AuthController.Login (LeadForge) - Validation state: "Valid"
+2026-03-09 10:41:09.979 +01:00 [INF] Executed DbCommand (62ms) [Parameters=[@__request_Email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT u."Id", u."CreatedAt", u."Credits", u."Email", u."PasswordHash"
+FROM "Users" AS u
+WHERE u."Email" = @__request_Email_0
+LIMIT 1
+2026-03-09 10:41:10.423 +01:00 [INF] Executed DbCommand (14ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?' (DbType = DateTime), @p3='?' (DbType = Boolean), @p4='?', @p5='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "RefreshTokens" ("Id", "CreatedAt", "ExpiresAt", "IsRevoked", "TokenHash", "UserId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2026-03-09 10:41:10.434 +01:00 [INF] Executed action method LeadForge.Api.Controllers.AuthController.Login (LeadForge), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1370.1988ms.
+2026-03-09 10:41:10.439 +01:00 [INF] Executing OkObjectResult, writing value of type 'LeadForge.Application.AuthResponse'.
+2026-03-09 10:41:10.451 +01:00 [INF] Executed action LeadForge.Api.Controllers.AuthController.Login (LeadForge) in 1512.7413ms
+2026-03-09 10:41:10.451 +01:00 [INF] Executed endpoint 'LeadForge.Api.Controllers.AuthController.Login (LeadForge)'
+2026-03-09 10:41:10.456 +01:00 [INF] HTTP POST /api/Auth/login responded 200 in 1601.6886 ms
+2026-03-09 10:41:10.466 +01:00 [INF] Request finished HTTP/1.1 POST http://localhost:5187/api/Auth/login - 200 null application/json; charset=utf-8 1618.3929ms
+2026-03-09 10:41:30.955 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5187/api/dashboard - null null
+2026-03-09 10:41:30.980 +01:00 [INF] Executing endpoint 'LeadForge.Api.Controllers.DashboardController.GetDashboard (LeadForge)'
+2026-03-09 10:41:30.983 +01:00 [INF] Route matched with {action = "GetDashboard", controller = "Dashboard"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[LeadForge.Application.Dashboard.DashboardResponse]] GetDashboard(System.Threading.CancellationToken) on controller LeadForge.Api.Controllers.DashboardController (LeadForge).
+2026-03-09 10:41:30.984 +01:00 [INF] Executed action LeadForge.Api.Controllers.DashboardController.GetDashboard (LeadForge) in 1.146ms
+2026-03-09 10:41:30.985 +01:00 [INF] Executed endpoint 'LeadForge.Api.Controllers.DashboardController.GetDashboard (LeadForge)'
+2026-03-09 10:41:30.985 +01:00 [ERR] HTTP GET /api/dashboard responded 500 in 25.9586 ms
+System.InvalidOperationException: Unable to resolve service for type 'LeadForge.Application.Interfaces.IDashboardService' while attempting to activate 'LeadForge.Api.Controllers.DashboardController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method151(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-03-09 10:41:30.988 +01:00 [ERR] Unhandled exception for request GET /api/dashboard
+System.InvalidOperationException: Unable to resolve service for type 'LeadForge.Application.Interfaces.IDashboardService' while attempting to activate 'LeadForge.Api.Controllers.DashboardController'.
+   at Microsoft.Extensions.DependencyInjection.ActivatorUtilities.ThrowHelperUnableToResolveService(Type type, Type requiredBy)
+   at lambda_method151(Closure, IServiceProvider, Object[])
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerFactoryProvider.<>c__DisplayClass6_0.<CreateControllerFactory>g__CreateController|0(ControllerContext controllerContext)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at LeadForge.Api.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /Users/adriandomanski/Projects/leadforge/api/LeadForge/Api/Middleware/ExceptionHandlingMiddleware.cs:line 25
+2026-03-09 10:41:31.001 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5187/api/dashboard - 500 null application/json 46.4687ms
+2026-03-09 10:42:06.242 +01:00 [INF] Application is shutting down...
+2026-03-09 10:42:14.755 +01:00 [INF] Starting LeadForge API...
+2026-03-09 10:42:15.134 +01:00 [INF] User profile is available. Using '/Users/adriandomanski/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-03-09 10:42:15.245 +01:00 [INF] Now listening on: http://localhost:5187
+2026-03-09 10:42:15.248 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-09 10:42:15.248 +01:00 [INF] Hosting environment: Development
+2026-03-09 10:42:15.248 +01:00 [INF] Content root path: /Users/adriandomanski/Projects/leadforge/api/LeadForge
+2026-03-09 10:42:22.480 +01:00 [INF] Starting LeadForge API...
+2026-03-09 10:42:22.622 +01:00 [INF] User profile is available. Using '/Users/adriandomanski/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-03-09 10:42:22.670 +01:00 [INF] Now listening on: http://localhost:5187
+2026-03-09 10:42:22.672 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-09 10:42:22.672 +01:00 [INF] Hosting environment: Development
+2026-03-09 10:42:22.672 +01:00 [INF] Content root path: /Users/adriandomanski/Projects/leadforge/api/LeadForge
+2026-03-09 10:42:23.194 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5187/swagger/index.html - null null
+2026-03-09 10:42:23.308 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5187/swagger/index.html - 200 null text/html;charset=utf-8 116.6712ms
+2026-03-09 10:42:23.435 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5187/swagger/v1/swagger.json - null null
+2026-03-09 10:42:23.544 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5187/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 109.4955ms
+2026-03-09 10:42:28.218 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5187/api/dashboard - null null
+2026-03-09 10:42:28.224 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-03-09 10:42:28.302 +01:00 [INF] Executing endpoint 'LeadForge.Api.Controllers.DashboardController.GetDashboard (LeadForge)'
+2026-03-09 10:42:28.321 +01:00 [INF] Route matched with {action = "GetDashboard", controller = "Dashboard"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[LeadForge.Application.Dashboard.DashboardResponse]] GetDashboard(System.Threading.CancellationToken) on controller LeadForge.Api.Controllers.DashboardController (LeadForge).
+2026-03-09 10:42:28.525 +01:00 [INF] Executing action method LeadForge.Api.Controllers.DashboardController.GetDashboard (LeadForge) - Validation state: "Valid"
+2026-03-09 10:42:29.402 +01:00 [INF] Executed DbCommand (58ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT u."Credits"
+FROM "Users" AS u
+WHERE u."Id" = @__userId_0
+LIMIT 2
+2026-03-09 10:42:29.461 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM "Generations" AS g
+WHERE g."UserId" = @__userId_0
+2026-03-09 10:42:29.480 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__userId_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT g."Id", g."GoalType", g."InputText", g."OutputText", g."CreatedAt"
+FROM "Generations" AS g
+WHERE g."UserId" = @__userId_0
+ORDER BY g."CreatedAt" DESC
+LIMIT @__p_1
+2026-03-09 10:42:29.493 +01:00 [INF] Executed action method LeadForge.Api.Controllers.DashboardController.GetDashboard (LeadForge), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 963.6979ms.
+2026-03-09 10:42:29.500 +01:00 [INF] Executing OkObjectResult, writing value of type 'LeadForge.Application.Dashboard.DashboardResponse'.
+2026-03-09 10:42:29.550 +01:00 [INF] Executed action LeadForge.Api.Controllers.DashboardController.GetDashboard (LeadForge) in 1129.6234ms
+2026-03-09 10:42:29.551 +01:00 [INF] Executed endpoint 'LeadForge.Api.Controllers.DashboardController.GetDashboard (LeadForge)'
+2026-03-09 10:42:29.555 +01:00 [INF] HTTP GET /api/dashboard responded 200 in 1331.1263 ms
+2026-03-09 10:42:29.566 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5187/api/dashboard - 200 null application/json; charset=utf-8 1347.8381ms
+2026-03-09 10:59:00.713 +01:00 [INF] Application is shutting down...
+2026-03-09 11:14:00.455 +01:00 [INF] Starting LeadForge API...
+2026-03-09 11:14:00.626 +01:00 [INF] User profile is available. Using '/Users/adriandomanski/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+2026-03-09 11:14:00.671 +01:00 [INF] Now listening on: http://localhost:5187
+2026-03-09 11:14:00.673 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-09 11:14:00.673 +01:00 [INF] Hosting environment: Development
+2026-03-09 11:14:00.673 +01:00 [INF] Content root path: /Users/adriandomanski/Projects/leadforge/api/LeadForge
+2026-03-09 11:14:00.799 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5187/swagger/index.html - null null
+2026-03-09 11:14:00.918 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5187/swagger/index.html - 200 null text/html;charset=utf-8 119.7004ms
+2026-03-09 11:14:01.038 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5187/swagger/v1/swagger.json - null null
+2026-03-09 11:14:01.141 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5187/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 103.0363ms
+2026-03-09 11:14:16.799 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5187/api/generate/Generation?page=1&pageSize=10 - null null
+2026-03-09 11:14:16.809 +01:00 [WRN] Failed to determine the https port for redirect.
+2026-03-09 11:14:16.867 +01:00 [INF] Executing endpoint 'LeadForge.Api.Controllers.GenerationController.GetUserGenerations (LeadForge)'
+2026-03-09 11:14:16.882 +01:00 [INF] Route matched with {action = "GetUserGenerations", controller = "Generation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[LeadForge.Application.PagedResult`1[LeadForge.Application.GenerationListItem]]] GetUserGenerations(Int32, Int32, System.Threading.CancellationToken) on controller LeadForge.Api.Controllers.GenerationController (LeadForge).
+2026-03-09 11:14:17.006 +01:00 [INF] Executing action method LeadForge.Api.Controllers.GenerationController.GetUserGenerations (LeadForge) - Validation state: "Valid"
+2026-03-09 11:14:17.972 +01:00 [INF] Executed DbCommand (60ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM "Generations" AS g
+WHERE g."UserId" = @__userId_0
+2026-03-09 11:14:18.021 +01:00 [INF] Executed DbCommand (6ms) [Parameters=[@__userId_0='?' (DbType = Guid), @__p_2='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT g."Id", g."GoalType", g."InputText", g."OutputText", g."CreatedAt"
+FROM "Generations" AS g
+WHERE g."UserId" = @__userId_0
+ORDER BY g."CreatedAt" DESC
+LIMIT @__p_2 OFFSET @__p_1
+2026-03-09 11:14:18.035 +01:00 [INF] Executed action method LeadForge.Api.Controllers.GenerationController.GetUserGenerations (LeadForge), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 1026.1811ms.
+2026-03-09 11:14:18.042 +01:00 [INF] Executing OkObjectResult, writing value of type 'LeadForge.Application.PagedResult`1[[LeadForge.Application.GenerationListItem, LeadForge, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-09 11:14:18.090 +01:00 [INF] Executed action LeadForge.Api.Controllers.GenerationController.GetUserGenerations (LeadForge) in 1205.5958ms
+2026-03-09 11:14:18.091 +01:00 [INF] Executed endpoint 'LeadForge.Api.Controllers.GenerationController.GetUserGenerations (LeadForge)'
+2026-03-09 11:14:18.094 +01:00 [INF] HTTP GET /api/generate/Generation responded 200 in 1285.4952 ms
+2026-03-09 11:14:18.105 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5187/api/generate/Generation?page=1&pageSize=10 - 200 null application/json; charset=utf-8 1305.8528ms
+2026-03-09 11:14:40.246 +01:00 [INF] Request starting HTTP/1.1 DELETE http://localhost:5187/api/generate/Generation/d8da058f-04f6-418c-a75b-fa2867113a92 - null null
+2026-03-09 11:14:40.256 +01:00 [INF] Executing endpoint 'LeadForge.Api.Controllers.GenerationController.Delete (LeadForge)'
+2026-03-09 11:14:40.259 +01:00 [INF] Route matched with {action = "Delete", controller = "Generation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Delete(System.Guid, System.Threading.CancellationToken) on controller LeadForge.Api.Controllers.GenerationController (LeadForge).
+2026-03-09 11:14:40.261 +01:00 [INF] Executing action method LeadForge.Api.Controllers.GenerationController.Delete (LeadForge) - Validation state: "Valid"
+2026-03-09 11:14:40.332 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__id_0='?' (DbType = Guid), @__userId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g."Id", g."CreatedAt", g."GoalType", g."InputText", g."OutputText", g."UserId"
+FROM "Generations" AS g
+WHERE g."Id" = @__id_0 AND g."UserId" = @__userId_1
+LIMIT 1
+2026-03-09 11:14:40.440 +01:00 [INF] Executed DbCommand (8ms) [Parameters=[@p0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM "Generations"
+WHERE "Id" = @p0;
+2026-03-09 11:14:40.447 +01:00 [INF] Executed action method LeadForge.Api.Controllers.GenerationController.Delete (LeadForge), returned result Microsoft.AspNetCore.Mvc.NoContentResult in 186.501ms.
+2026-03-09 11:14:40.451 +01:00 [INF] Executing StatusCodeResult, setting HTTP status code 204
+2026-03-09 11:14:40.451 +01:00 [INF] Executed action LeadForge.Api.Controllers.GenerationController.Delete (LeadForge) in 191.8599ms
+2026-03-09 11:14:40.451 +01:00 [INF] Executed endpoint 'LeadForge.Api.Controllers.GenerationController.Delete (LeadForge)'
+2026-03-09 11:14:40.451 +01:00 [INF] HTTP DELETE /api/generate/Generation/d8da058f-04f6-418c-a75b-fa2867113a92 responded 204 in 202.2817 ms
+2026-03-09 11:14:40.451 +01:00 [INF] Request finished HTTP/1.1 DELETE http://localhost:5187/api/generate/Generation/d8da058f-04f6-418c-a75b-fa2867113a92 - 204 null null 205.9608ms
+2026-03-09 11:14:49.239 +01:00 [INF] Request starting HTTP/1.1 GET http://localhost:5187/api/generate/Generation?page=1&pageSize=10 - null null
+2026-03-09 11:14:49.248 +01:00 [INF] Executing endpoint 'LeadForge.Api.Controllers.GenerationController.GetUserGenerations (LeadForge)'
+2026-03-09 11:14:49.248 +01:00 [INF] Route matched with {action = "GetUserGenerations", controller = "Generation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[LeadForge.Application.PagedResult`1[LeadForge.Application.GenerationListItem]]] GetUserGenerations(Int32, Int32, System.Threading.CancellationToken) on controller LeadForge.Api.Controllers.GenerationController (LeadForge).
+2026-03-09 11:14:49.257 +01:00 [INF] Executing action method LeadForge.Api.Controllers.GenerationController.GetUserGenerations (LeadForge) - Validation state: "Valid"
+2026-03-09 11:14:49.269 +01:00 [INF] Executed DbCommand (5ms) [Parameters=[@__userId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT count(*)::int
+FROM "Generations" AS g
+WHERE g."UserId" = @__userId_0
+2026-03-09 11:14:49.275 +01:00 [INF] Executed DbCommand (3ms) [Parameters=[@__userId_0='?' (DbType = Guid), @__p_2='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT g."Id", g."GoalType", g."InputText", g."OutputText", g."CreatedAt"
+FROM "Generations" AS g
+WHERE g."UserId" = @__userId_0
+ORDER BY g."CreatedAt" DESC
+LIMIT @__p_2 OFFSET @__p_1
+2026-03-09 11:14:49.275 +01:00 [INF] Executed action method LeadForge.Api.Controllers.GenerationController.GetUserGenerations (LeadForge), returned result Microsoft.AspNetCore.Mvc.OkObjectResult in 18.0737ms.
+2026-03-09 11:14:49.276 +01:00 [INF] Executing OkObjectResult, writing value of type 'LeadForge.Application.PagedResult`1[[LeadForge.Application.GenerationListItem, LeadForge, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-09 11:14:49.277 +01:00 [INF] Executed action LeadForge.Api.Controllers.GenerationController.GetUserGenerations (LeadForge) in 28.9935ms
+2026-03-09 11:14:49.278 +01:00 [INF] Executed endpoint 'LeadForge.Api.Controllers.GenerationController.GetUserGenerations (LeadForge)'
+2026-03-09 11:14:49.278 +01:00 [INF] HTTP GET /api/generate/Generation responded 200 in 37.7988 ms
+2026-03-09 11:14:49.278 +01:00 [INF] Request finished HTTP/1.1 GET http://localhost:5187/api/generate/Generation?page=1&pageSize=10 - 200 null application/json; charset=utf-8 38.956ms
+2026-03-09 11:15:04.153 +01:00 [INF] Request starting HTTP/1.1 DELETE http://localhost:5187/api/generate/Generation/d8da058f-04f6-418c-a75b-fa2867113a92 - null null
+2026-03-09 11:15:04.155 +01:00 [INF] Executing endpoint 'LeadForge.Api.Controllers.GenerationController.Delete (LeadForge)'
+2026-03-09 11:15:04.156 +01:00 [INF] Route matched with {action = "Delete", controller = "Generation"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Delete(System.Guid, System.Threading.CancellationToken) on controller LeadForge.Api.Controllers.GenerationController (LeadForge).
+2026-03-09 11:15:04.158 +01:00 [INF] Executing action method LeadForge.Api.Controllers.GenerationController.Delete (LeadForge) - Validation state: "Valid"
+2026-03-09 11:15:04.167 +01:00 [INF] Executed DbCommand (7ms) [Parameters=[@__id_0='?' (DbType = Guid), @__userId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT g."Id", g."CreatedAt", g."GoalType", g."InputText", g."OutputText", g."UserId"
+FROM "Generations" AS g
+WHERE g."Id" = @__id_0 AND g."UserId" = @__userId_1
+LIMIT 1
+2026-03-09 11:15:04.169 +01:00 [INF] Executed action LeadForge.Api.Controllers.GenerationController.Delete (LeadForge) in 12.6081ms
+2026-03-09 11:15:04.169 +01:00 [INF] Executed endpoint 'LeadForge.Api.Controllers.GenerationController.Delete (LeadForge)'
+2026-03-09 11:15:04.169 +01:00 [ERR] HTTP DELETE /api/generate/Generation/d8da058f-04f6-418c-a75b-fa2867113a92 responded 500 in 14.7248 ms
+LeadForge.Domain.Exceptions.NotFoundException: Generation was not found.
+   at LeadForge.Application.GenerationService.DeleteAsync(Guid id, CancellationToken ct) in /Users/adriandomanski/Projects/leadforge/api/LeadForge/Application/Services/GenerationService.cs:line 145
+   at LeadForge.Api.Controllers.GenerationController.Delete(Guid id, CancellationToken ct) in /Users/adriandomanski/Projects/leadforge/api/LeadForge/Api/Controllers/GenerationController.cs:line 62
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Logged|12_1(ControllerActionInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+2026-03-09 11:15:04.186 +01:00 [ERR] Unhandled exception for request DELETE /api/generate/Generation/d8da058f-04f6-418c-a75b-fa2867113a92
+LeadForge.Domain.Exceptions.NotFoundException: Generation was not found.
+   at LeadForge.Application.GenerationService.DeleteAsync(Guid id, CancellationToken ct) in /Users/adriandomanski/Projects/leadforge/api/LeadForge/Application/Services/GenerationService.cs:line 145
+   at LeadForge.Api.Controllers.GenerationController.Delete(Guid id, CancellationToken ct) in /Users/adriandomanski/Projects/leadforge/api/LeadForge/Api/Controllers/GenerationController.cs:line 62
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Logged|12_1(ControllerActionInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Serilog.AspNetCore.RequestLoggingMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at LeadForge.Api.Middleware.ExceptionHandlingMiddleware.InvokeAsync(HttpContext context) in /Users/adriandomanski/Projects/leadforge/api/LeadForge/Api/Middleware/ExceptionHandlingMiddleware.cs:line 25
+2026-03-09 11:15:04.207 +01:00 [INF] Request finished HTTP/1.1 DELETE http://localhost:5187/api/generate/Generation/d8da058f-04f6-418c-a75b-fa2867113a92 - 404 null application/json 54.0096ms
+2026-03-09 11:45:43.935 +01:00 [INF] Application is shutting down...
