@@ -3,8 +3,6 @@ using FluentValidation.AspNetCore;
 using LeadForge.Api.Middleware;
 using LeadForge.Application.Extensions;
 using LeadForge.Application.Validators;
-using LeadForge.Infrastructure;
-using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,17 +18,20 @@ Log.Information("Starting LeadForge API...");
 // Services
 // --------------------
 
-builder.Services
-    .AddApiControllers()
-    .AddEndpointsApiExplorer()
-    .AddSwaggerDocumentation()
-    .AddFluentValidationAutoValidation()
-    .AddValidatorsFromAssemblyContaining<GeneratePostRequestValidator>()
-    .AddApplicationServices()
-    .AddRateLimiterServices()
-    .AddCorsPolicyServices()
-    .AddInfrastructure(builder.Configuration)
-    .AddJwtAuthentication(builder.Configuration);
+builder.Services.AddApiControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerDocumentation();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<GeneratePostRequestValidator>();
+
+builder.Services.AddApplicationServices();
+
+builder.Services.AddRateLimiterServices();
+builder.Services.AddCorsPolicyServices();
+
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();
 
@@ -69,6 +70,6 @@ app.MapControllers();
 // Database migration
 // --------------------
 
-app.ApplyMigrations();
+await app.ApplyMigrationsAsync();
 
 app.Run();
