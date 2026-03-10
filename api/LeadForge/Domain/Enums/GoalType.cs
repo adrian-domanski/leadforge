@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace LeadForge.Domain.Enums;
 
 public enum GoalType

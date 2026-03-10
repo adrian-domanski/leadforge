@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using LeadForge.Api.Middleware;
@@ -15,7 +16,7 @@ Log.Information("Starting LeadForge API...");
 // Core
 // --------------------
 
-builder.Services.AddControllers();
+builder.Services.AddApiControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 // --------------------

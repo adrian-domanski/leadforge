@@ -21,7 +21,7 @@ public class GenerationController : ControllerBase
    [EnableRateLimiting("generation")]
    [HttpPost]
    public async Task<ActionResult> CreateGeneration(
-      GeneratePostRequest request,
+      [FromBody] GeneratePostRequest request,
       CancellationToken ct = default )
    {
       var result = await _generationService.GenerateAsync(request,
