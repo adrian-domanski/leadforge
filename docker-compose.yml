@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: leadforge_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: leadforge
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - leadforge_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    container_name: leadforge_api
+    depends_on:
+      - postgres
+    environment:
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=leadforge;Username=postgres;Password=postgres
+      OpenAI__ApiKey: ${OPENAI_API_KEY}
+    ports:
+      - '8080:8080'
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: leadforge_frontend
+    depends_on:
+      - api
+    ports:
+      - '3000:3000'
+
+volumes:
+  leadforge_data:

@@ -6,6 +6,7 @@ public static class ApplicationServiceExtensions
 {
    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
    {
+      services.AddHealthChecks();
       services.AddHttpContextAccessor();
       services.AddScoped<IOpenAiService, OpenAiService>();
       services.AddScoped<IGenerationService, GenerationService>();

@@ -6,6 +6,7 @@ import { AppLayout } from '@/components/layout/app-layout';
 import { getGenerations, deleteGeneration } from '@/api/generations';
 import { Button } from '@/components/ui/button';
 import { AuthGuard } from '@/components/auth/AuthGuard';
+import { GenerationListItem } from '@/types/api';
 
 export default function HistoryPage() {
   const queryClient = useQueryClient();
@@ -48,7 +49,7 @@ export default function HistoryPage() {
         <div className='max-w-4xl space-y-6'>
           <h1 className='text-2xl font-bold'>History</h1>
 
-          {data.items.map((g) => (
+          {data.items.map((g: GenerationListItem) => (
             <div key={g.id} className='border rounded-lg p-4 space-y-3'>
               <span className='text-xs text-muted-foreground'>
                 {new Date(g.createdAt).toLocaleDateString()}

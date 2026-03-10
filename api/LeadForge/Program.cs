@@ -1,92 +1,74 @@
-using System.Text.Json.Serialization;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using LeadForge.Api.Middleware;
 using LeadForge.Application.Extensions;
 using LeadForge.Application.Validators;
+using LeadForge.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddLoggerConfiguration();
+// --------------------
+// Logging
+// --------------------
 
+builder.AddLoggerConfiguration();
 Log.Information("Starting LeadForge API...");
 
 // --------------------
-// Core
+// Services
 // --------------------
 
-builder.Services.AddApiControllers();
-builder.Services.AddEndpointsApiExplorer();
-
-// --------------------
-// Swagger
-// --------------------
-
-builder.Services.AddSwaggerDocumentation();
-
-// --------------------
-// Validation
-// --------------------
-
-builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddValidatorsFromAssemblyContaining<GeneratePostRequestValidator>();
-
-// --------------------
-// Application services
-// --------------------
-
-builder.Services.AddApplicationServices();
-builder.Services.AddRateLimiterServices();
-builder.Services.AddCorsPolicyServices();
-
-// --------------------
-// Database
-// --------------------
-
-builder.Services.AddInfrastructure(builder.Configuration);
-
-// --------------------
-// Authentication
-// --------------------
-
-builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services
+    .AddApiControllers()
+    .AddEndpointsApiExplorer()
+    .AddSwaggerDocumentation()
+    .AddFluentValidationAutoValidation()
+    .AddValidatorsFromAssemblyContaining<GeneratePostRequestValidator>()
+    .AddApplicationServices()
+    .AddRateLimiterServices()
+    .AddCorsPolicyServices()
+    .AddInfrastructure(builder.Configuration)
+    .AddJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();
 
 // --------------------
-// Middleware Pipeline
+// Middleware
 // --------------------
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-// --------------------
-// Development Tools
-// --------------------
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c =>
+    app.UseSwaggerUI(options =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "LeadForge API v1");
-        c.ConfigObject.AdditionalItems["persistAuthorization"] = "true";
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "LeadForge API v1");
+        options.ConfigObject.AdditionalItems["persistAuthorization"] = "true";
     });
 }
 
-// --------------------
-// Pipeline
-// --------------------
-
 app.UseSerilogRequestLogging();
-app.UseRateLimiter();
+
 app.UseCors("frontend");
-// ---
+
+app.UseRateLimiter();
 
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHealthChecks("/health");
+
 app.MapControllers();
+
+// --------------------
+// Database migration
+// --------------------
+
+app.ApplyMigrations();
 
 app.Run();
