@@ -2,22 +2,25 @@
 
 AI-powered LinkedIn post generator built with **.NET 8 and Next.js**.
 
-LeadForge helps founders and developers generate high-quality LinkedIn
-posts designed to drive engagement and inbound leads.
+LeadForge helps founders, developers and agencies generate high-quality
+LinkedIn posts designed to drive engagement and inbound leads.
 
 ------------------------------------------------------------------------
 
 ## Features
 
--   AI-powered LinkedIn post generation
--   Authentication with JWT + Refresh Tokens
--   Credits system
--   Generation history with pagination
+-   AI-powered LinkedIn post generation using OpenAI
+-   Authentication with **JWT + Refresh Tokens**
+-   Credits system controlling AI usage
+-   Generation history with **pagination**
 -   Rate limiting for AI requests
--   FluentValidation request validation
+-   Request validation using **FluentValidation**
 -   Global exception handling middleware
--   Modern React frontend with React Query
--   Responsive SaaS dashboard UI
+-   Health check endpoint (`/health`)
+-   Automatic database migrations on startup
+-   Modern **React / Next.js dashboard**
+-   Data fetching with **React Query**
+-   Dockerized full‑stack environment
 
 ------------------------------------------------------------------------
 
@@ -33,6 +36,7 @@ posts designed to drive engagement and inbound leads.
 -   Serilog
 -   JWT Authentication
 -   OpenAI API
+-   Clean Architecture
 
 ### Frontend
 
@@ -41,6 +45,14 @@ posts designed to drive engagement and inbound leads.
 -   React Query
 -   TailwindCSS
 -   shadcn/ui
+-   TypeScript
+
+### DevOps
+
+-   Docker
+-   Docker Compose
+-   Dev / Production environments
+-   Environment variables via `.env`
 
 ------------------------------------------------------------------------
 
@@ -48,20 +60,41 @@ posts designed to drive engagement and inbound leads.
 
 The backend follows a **Clean Architecture inspired structure**.
 
-    API
-    │
-    Application
-    │
-    Domain
-    │
-    Infrastructure
+``` mermaid
+flowchart LR
 
-Responsibilities:
+User[User Browser]
 
--   **API** → controllers and middleware\
--   **Application** → business logic\
--   **Domain** → entities and domain rules\
--   **Infrastructure** → database and external services
+Frontend[Next.js Frontend]
+API[ASP.NET Core API]
+
+Auth[Authentication Layer]
+App[Application Layer]
+Domain[Domain Layer]
+Infra[Infrastructure]
+
+DB[(PostgreSQL)]
+OpenAI[(OpenAI API)]
+
+User --> Frontend
+Frontend -->|HTTP / REST| API
+
+API --> Auth
+API --> App
+
+App --> Domain
+App --> Infra
+
+Infra --> DB
+Infra --> OpenAI
+```
+
+### Backend Layers
+
+-   **API Layer** → Controllers, middleware and HTTP endpoints
+-   **Application Layer** → Business logic and services
+-   **Domain Layer** → Entities and domain rules
+-   **Infrastructure Layer** → Database access and external integrations
 
 ------------------------------------------------------------------------
 
@@ -83,48 +116,110 @@ Responsibilities:
 
 ## Demo Account
 
-You can use the demo account:
+You can log in with the demo account:
 
-email: demo@leadforge.ai\
-password: demo123
+    email: demo@leadforge.ai
+    password: demo123
 
 ------------------------------------------------------------------------
 
-## Running locally
+## Running the Project
 
-Clone repository:
+Clone the repository:
 
-git clone https://github.com/yourname/leadforge
+    git clone https://github.com/yourname/leadforge
+    cd leadforge
 
-### Backend
+------------------------------------------------------------------------
 
-dotnet run
+## Development Environment
 
-### Frontend
+Start the development environment:
 
-npm install\
-npm run dev
+    docker compose -f docker-compose.dev.yml up
+
+Services:
+
+    Frontend  → http://localhost:3000
+    API       → http://localhost:8080
+    Postgres  → localhost:5432
+
+The development environment uses:
+
+-   `dotnet watch` for hot reload
+-   `next dev` for fast frontend refresh
+-   mounted volumes for instant code updates
+
+------------------------------------------------------------------------
+
+## Production-like Environment
+
+To build and run the production containers:
+
+    docker compose up --build
+
+This will build:
+
+-   .NET API production image
+-   Next.js production build
+-   PostgreSQL container
+
+------------------------------------------------------------------------
+
+## Environment Variables
+
+Create a `.env` file from the template:
+
+    cp .env.example .env
+
+Example variables:
+
+    OPENAI_API_KEY=your_openai_api_key
+
+The `.env` file is **not committed to the repository** for security
+reasons.
 
 ------------------------------------------------------------------------
 
 ## Project Structure
 
-    /LeadForge
-      /docs
-        login.png
-        dashboard.png
-        generate.png
-      /LeadForge.Api
-      /LeadForge.Application
-      /LeadForge.Domain
-      /LeadForge.Infrastructure
-      /frontend
+    leadforge
+    │
+    ├ docker-compose.yml
+    ├ docker-compose.dev.yml
+    ├ Makefile
+    │
+    ├ api
+    │   ├ Dockerfile
+    │   ├ LeadForge.sln
+    │   └ LeadForge/
+    │
+    ├ frontend
+    │   ├ Dockerfile
+    │   └ src/
+    │
+    ├ docs
+    │   ├ login.png
+    │   ├ dashboard.png
+    │   └ generate.png
+    │
+    └ README.md
+
+------------------------------------------------------------------------
+
+## Health Check
+
+The API exposes a health endpoint:
+
+    GET /health
+
+This endpoint is useful for monitoring and container orchestration.
 
 ------------------------------------------------------------------------
 
 ## Future Improvements
 
--   Payments with Stripe
--   Subscription plans
+-   Stripe payments and subscription plans
 -   Redis caching
--   Analytics dashboard
+-   AI prompt analytics
+-   Multi-user workspaces
