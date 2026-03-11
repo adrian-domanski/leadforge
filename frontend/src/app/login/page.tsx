@@ -35,11 +35,31 @@ export default function LoginPage() {
     }
   };
 
+  const handleDemoLogin = async () => {
+    try {
+      setLoading(true);
+
+      const data = await login({
+        email: 'example@example.com',
+        password: 'example123',
+      });
+
+      localStorage.setItem('token', data.accessToken);
+      window.location.href = '/dashboard';
+    } catch (e) {
+      handleApiError(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <AuthGuard requireAuth={false}>
       <div className='relative flex min-h-screen items-center justify-center bg-cover bg-center'>
+        {/* Background overlay */}
         <div className='absolute inset-0 bg-black/40' />
 
+        {/* Card */}
         <Card className='relative w-[400px] bg-white/90 backdrop-blur shadow-xl border'>
           <CardHeader className='space-y-3 text-center'>
             <div className='flex items-center justify-center gap-2 text-lg font-semibold'>
@@ -55,6 +75,7 @@ export default function LoginPage() {
           </CardHeader>
 
           <CardContent>
+            {/* Login form */}
             <form onSubmit={handleLogin} className='space-y-4'>
               <Input
                 placeholder='Email'
@@ -74,7 +95,25 @@ export default function LoginPage() {
               </Button>
             </form>
 
-            <p className='text-sm text-center text-muted-foreground mt-4'>
+            {/* Demo login */}
+            <div className='mt-4'>
+              <Button
+                type='button'
+                variant='outline'
+                className='w-full'
+                onClick={handleDemoLogin}
+                disabled={loading}
+              >
+                Explore Demo
+              </Button>
+
+              <p className='text-xs text-center text-muted-foreground mt-2'>
+                Recruiter? Instantly explore the app using the demo account.
+              </p>
+            </div>
+
+            {/* Register */}
+            <p className='text-sm text-center text-muted-foreground mt-6'>
               Don’t have an account?{' '}
               <Link href='/register' className='underline'>
                 Register
