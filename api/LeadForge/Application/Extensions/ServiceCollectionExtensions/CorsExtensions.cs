@@ -9,8 +9,11 @@ public static class CorsExtensions
          options.AddPolicy("frontend", policy =>
          {
             policy
-               .WithOrigins("http://localhost:3000", "https://leadforge.kodario.com/login",
-               "https://www.leadforge.kodario.com/login")
+               .WithOrigins(
+                  "http://localhost:3000",
+                  "https://leadforge.kodario.com",
+                  "https://www.leadforge.kodario.com"
+               )
                .AllowAnyHeader()
                .AllowAnyMethod();
          });
