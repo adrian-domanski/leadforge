@@ -9,25 +9,30 @@ public static class ApplyMigrationsExtensions
     {
         using var scope = app.Services.CreateScope();
 
-        var logger = scope.ServiceProvider
-            .GetRequiredService<ILoggerFactory>()
-            .CreateLogger("Migration");
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>()
+            .CreateLogger("DatabaseMigration");
 
-        try
+        const int maxRetries = 5;
+
+        for (int i = 1; i <= maxRetries; i++)
         {
-            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            try
+            {
+                logger.LogInformation("Applying database migrations...");
+                await db.Database.MigrateAsync();
+                logger.LogInformation("Database migrations applied successfully.");
+                return;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Migration attempt {Attempt} failed", i);
 
-            await db.Database.MigrateAsync();
+                if (i == maxRetries)
+                    throw;
 
-            var seeder = new DatabaseSeeder(db);
-            await seeder.SeedAsync();
-
-            logger.LogInformation("Database migrations applied successfully.");
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error applying database migrations.");
-            throw;
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
         }
     }
 }

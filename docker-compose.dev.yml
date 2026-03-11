@@ -15,28 +15,32 @@ services:
       - leadforge_data:/var/lib/postgresql/data
 
   api:
-    image: mcr.microsoft.com/dotnet/sdk:8.0
+    build:
+      context: .
+      dockerfile: api/Dockerfile.dev
     container_name: leadforge_api_dev
     working_dir: /app
     volumes:
       - ./api:/app
-    command: dotnet watch run --project LeadForge/LeadForge.csproj --urls=${ASPNETCORE_URLS}
     depends_on:
       - postgres
     environment:
       ConnectionStrings__DefaultConnection: ${DB_CONNECTION_STRING}
       OpenAI__ApiKey: ${OPENAI_API_KEY}
       Jwt__Key: ${JWT_SECRET}
-      ASPNETCORE_URLS: ${ASPNETCORE_URLS}
+      ASPNETCORE_URLS: http://0.0.0.0:8080
     ports:
       - '8080:8080'
 
   frontend:
-    image: node:20-alpine
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: leadforge_frontend_dev
     working_dir: /app
     volumes:
       - ./frontend:/app
-    command: sh -c "npm install && npm run dev"
+      - /app/node_modules
     environment:
       NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
     ports:

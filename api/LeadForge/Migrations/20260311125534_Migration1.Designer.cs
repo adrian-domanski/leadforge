@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LeadForge.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260306114424_Migration1")]
+    [Migration("20260311125534_Migration1")]
     partial class Migration1
     {
         /// <inheritdoc />

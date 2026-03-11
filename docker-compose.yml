@@ -25,7 +25,7 @@ services:
       ConnectionStrings__DefaultConnection: ${DB_CONNECTION_STRING}
       OpenAI__ApiKey: ${OPENAI_API_KEY}
       Jwt__Key: ${JWT_SECRET}
-      ASPNETCORE_URLS: ${ASPNETCORE_URLS}
+      ASPNETCORE_URLS: http://0.0.0.0:8080
     ports:
       - '8080:8080'
 
@@ -34,7 +34,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        NEXT_PUBLIC_API_URL: http://localhost:8080/api
     container_name: leadforge_frontend
     ports:
       - '3000:3000'
