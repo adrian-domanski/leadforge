@@ -8,6 +8,7 @@ public static class ApplicationServiceExtensions
    {
       services.AddHealthChecks();
       services.AddHttpContextAccessor();
+      services.AddScoped<DatabaseSeeder>();
       services.AddScoped<IOpenAiService, OpenAiService>();
       services.AddScoped<IGenerationService, GenerationService>();
       services.AddScoped<ITokenService, TokenService>();

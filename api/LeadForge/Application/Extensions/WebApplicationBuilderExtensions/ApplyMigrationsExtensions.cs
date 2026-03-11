@@ -8,6 +8,7 @@ public static class ApplyMigrationsExtensions
     public static async Task ApplyMigrationsAsync(this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
+        var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
 
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>()
@@ -22,6 +23,10 @@ public static class ApplyMigrationsExtensions
                 logger.LogInformation("Applying database migrations...");
                 await db.Database.MigrateAsync();
                 logger.LogInformation("Database migrations applied successfully.");
+
+                await seeder.SeedAsync();
+                logger.LogInformation("Database seeding completed.");
+
                 return;
             }
             catch (Exception ex)
@@ -34,5 +39,7 @@ public static class ApplyMigrationsExtensions
                 await Task.Delay(TimeSpan.FromSeconds(5));
             }
         }
+
+
     }
 }

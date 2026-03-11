@@ -32,5 +32,6 @@ public class DatabaseSeeder
 
         _db.Users.Add(user);
         await _db.SaveChangesAsync();
+
     }
 }
