@@ -2,65 +2,76 @@
 
 AI-powered LinkedIn post generator built with **.NET 8 and Next.js**.
 
-LeadForge helps founders, developers and agencies generate high-quality
+LeadForge helps founders, developers and agencies generate high‑quality
 LinkedIn posts designed to drive engagement and inbound leads.
 
-------------------------------------------------------------------------
+---
+
+## 🌐 Live Demo
+
+https://leadforge.kodario.com/
+
+Demo account:
+
+email: **example@example.com**\
+password: **example123**
+
+---
 
 ## Features
 
--   AI-powered LinkedIn post generation using OpenAI
--   Authentication with **JWT + Refresh Tokens**
--   Credits system controlling AI usage
--   Generation history with **pagination**
--   Rate limiting for AI requests
--   Request validation using **FluentValidation**
--   Global exception handling middleware
--   Health check endpoint (`/health`)
--   Automatic database migrations on startup
--   Modern **React / Next.js dashboard**
--   Data fetching with **React Query**
--   Dockerized full‑stack environment
+- AI‑powered LinkedIn post generation using OpenAI
+- Authentication with **JWT + Refresh Tokens**
+- Credits system controlling AI usage
+- Generation history with **pagination**
+- Rate limiting for AI requests
+- Request validation using **FluentValidation**
+- Global exception handling middleware
+- Health check endpoint (`/health`)
+- Automatic database migrations on startup
+- Modern **React / Next.js dashboard**
+- Data fetching with **React Query**
+- Dockerized full‑stack environment
 
-------------------------------------------------------------------------
+---
 
 ## Tech Stack
 
 ### Backend
 
--   .NET 8
--   ASP.NET Core Web API
--   Entity Framework Core
--   PostgreSQL
--   FluentValidation
--   Serilog
--   JWT Authentication
--   OpenAI API
--   Clean Architecture
+- .NET 8
+- ASP.NET Core Web API
+- Entity Framework Core
+- PostgreSQL
+- FluentValidation
+- Serilog
+- JWT Authentication
+- OpenAI API
+- Clean Architecture
 
 ### Frontend
 
--   Next.js
--   React
--   React Query
--   TailwindCSS
--   shadcn/ui
--   TypeScript
+- Next.js
+- React
+- React Query
+- TailwindCSS
+- shadcn/ui
+- TypeScript
 
 ### DevOps
 
--   Docker
--   Docker Compose
--   Dev / Production environments
--   Environment variables via `.env`
+- Docker
+- Docker Compose
+- Dev / Production environments
+- Environment variables via `.env`
 
-------------------------------------------------------------------------
+---
 
 ## Architecture
 
 The backend follows a **Clean Architecture inspired structure**.
 
-``` mermaid
+```mermaid
 flowchart LR
 
 User[User Browser]
@@ -91,12 +102,12 @@ Infra --> OpenAI
 
 ### Backend Layers
 
--   **API Layer** → Controllers, middleware and HTTP endpoints
--   **Application Layer** → Business logic and services
--   **Domain Layer** → Entities and domain rules
--   **Infrastructure Layer** → Database access and external integrations
+- **API Layer** → Controllers, middleware and HTTP endpoints\
+- **Application Layer** → Business logic and services\
+- **Domain Layer** → Entities and domain rules\
+- **Infrastructure Layer** → Database access and external integrations
 
-------------------------------------------------------------------------
+---
 
 ## Screenshots
 
@@ -112,16 +123,7 @@ Infra --> OpenAI
 
 ![Generate](docs/generate.png)
 
-------------------------------------------------------------------------
-
-## Demo Account
-
-You can log in with the demo account:
-
-    email: example@example.com
-    password: example123
-
-------------------------------------------------------------------------
+---
 
 ## Running the Project
 
@@ -130,7 +132,7 @@ Clone the repository:
     git clone https://github.com/yourname/leadforge
     cd leadforge
 
-------------------------------------------------------------------------
+---
 
 ## Development Environment
 
@@ -146,13 +148,13 @@ Services:
 
 The development environment uses:
 
--   `dotnet watch` for hot reload
--   `next dev` for fast frontend refresh
--   mounted volumes for instant code updates
+- `dotnet watch` for hot reload
+- `next dev` for fast frontend refresh
+- mounted volumes for instant code updates
 
-------------------------------------------------------------------------
+---
 
-## Production-like Environment
+## Production Environment
 
 To build and run the production containers:
 
@@ -160,11 +162,11 @@ To build and run the production containers:
 
 This will build:
 
--   .NET API production image
--   Next.js production build
--   PostgreSQL container
+- .NET API production image
+- Next.js production build
+- PostgreSQL container
 
-------------------------------------------------------------------------
+---
 
 ## Environment Variables
 
@@ -175,11 +177,12 @@ Create a `.env` file from the template:
 Example variables:
 
     OPENAI_API_KEY=your_openai_api_key
+    JWT_SECRET=your_super_long_secret_key
 
 The `.env` file is **not committed to the repository** for security
 reasons.
 
-------------------------------------------------------------------------
+---
 
 ## Project Structure
 
@@ -205,7 +208,7 @@ reasons.
     │
     └ README.md
 
-------------------------------------------------------------------------
+---
 
 ## Health Check
 
@@ -213,13 +216,13 @@ The API exposes a health endpoint:
 
     GET /health
 
-This endpoint is useful for monitoring and container orchestration.
+Useful for monitoring and container orchestration.
 
-------------------------------------------------------------------------
+---
 
 ## Future Improvements
 
--   Stripe payments and subscription plans
--   Redis caching
--   AI prompt analytics
--   Multi-user workspaces
+- Stripe payments and subscription plans
+- Redis caching
+- AI prompt analytics
+- Multi‑user workspaces
