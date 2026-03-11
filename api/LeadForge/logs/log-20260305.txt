@@ -1,1 +1,0 @@
-2026-03-05 13:14:53.505 +01:00 [INF] Starting LeadForge API
