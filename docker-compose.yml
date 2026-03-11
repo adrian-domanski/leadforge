@@ -22,9 +22,10 @@ services:
     depends_on:
       - postgres
     environment:
-      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=leadforge;Username=postgres;Password=postgres
+      ConnectionStrings__DefaultConnection: ${DB_CONNECTION_STRING}
       OpenAI__ApiKey: ${OPENAI_API_KEY}
       Jwt__Key: ${JWT_SECRET}
+      ASPNETCORE_URLS: ${ASPNETCORE_URLS}
     ports:
       - '8080:8080'
 
@@ -33,7 +34,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: http://localhost:8080/api
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
     container_name: leadforge_frontend
     ports:
       - '3000:3000'
