@@ -118,8 +118,8 @@ Infra --> OpenAI
 
 You can log in with the demo account:
 
-    email: demo@leadforge.ai
-    password: demo123
+    email: example@example.com
+    password: example123
 
 ------------------------------------------------------------------------
 
