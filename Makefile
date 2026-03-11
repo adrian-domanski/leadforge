@@ -1,8 +1,8 @@
-dev:
-	docker compose -f docker-compose.dev.yml up
-
 up:
 	docker compose up --build
+
+postgres:
+	docker compose up -d postgres
 
 down:
 	docker compose down
