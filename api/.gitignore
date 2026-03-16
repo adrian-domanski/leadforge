@@ -5,3 +5,17 @@ riderModule.iml
 /_ReSharper.Caches/
 logs
 appsettings.Development.json
+# Coverlet
+coverage.cobertura.xml
+coverage.json
+coverage.opencover.xml
+
+# reportgenerator output
+coverage-report/
+
+# test runner artifacts
+TestResults/
+
+# Visual Studio / dotnet coverage
+*.coverage
+*.coveragexml
