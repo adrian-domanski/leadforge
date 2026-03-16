@@ -7,6 +7,7 @@ import { getGenerations, deleteGeneration } from '@/api/generations';
 import { Button } from '@/components/ui/button';
 import { AuthGuard } from '@/components/auth/AuthGuard';
 import { GenerationListItem } from '@/types/api';
+import { Markdown } from '@/components/ui/markdown';
 
 export default function HistoryPage() {
   const queryClient = useQueryClient();
@@ -68,8 +69,7 @@ export default function HistoryPage() {
                   Delete
                 </Button>
               </div>
-
-              <div className='whitespace-pre-wrap'>{g.outputText}</div>
+              <Markdown content={g.outputText} />
             </div>
           ))}
 

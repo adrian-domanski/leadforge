@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { AuthGuard } from '@/components/auth/AuthGuard';
 import Link from 'next/link';
 import { Sparkles } from 'lucide-react';
+import { Markdown } from '@/components/ui/markdown';
 
 export default function Dashboard() {
   const { data, isLoading } = useQuery({
@@ -106,9 +107,7 @@ export default function Dashboard() {
                       <span>{new Date(g.createdAt).toLocaleDateString()}</span>
                     </div>
 
-                    <p className='whitespace-pre-wrap text-sm'>
-                      {g.outputText}
-                    </p>
+                    <Markdown content={g.outputText} />
 
                     <Button
                       variant='outline'

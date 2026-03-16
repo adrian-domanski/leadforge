@@ -9,7 +9,7 @@ public class GeneratePostRequestValidator : AbstractValidator<GeneratePostReques
       RuleFor(x => x.InputText)
          .NotEmpty()
          .MinimumLength(10)
-         .WithMessage("Input text must be at least 10 characters long.");
+         .WithMessage("Give us more text to work with!");
 
       RuleFor(x => x.GoalType)
          .NotEmpty()
