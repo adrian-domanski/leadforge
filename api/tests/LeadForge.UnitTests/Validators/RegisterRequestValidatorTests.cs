@@ -14,7 +14,7 @@ public class RegisterRequestValidatorTests
 
         var request = new RegisterRequest
         {
-            Email = "invalid-email",
+            Email = "invalid@email",
             Password = "Password123!"
         };
 
@@ -24,6 +24,8 @@ public class RegisterRequestValidatorTests
         // Assert
         result.IsValid.Should().BeFalse();
     }
+
+
 
     [Fact]
     public void Should_Return_Error_When_Password_Is_Empty()
